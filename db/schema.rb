@@ -87,6 +87,7 @@ ActiveRecord::Schema[7.1].define(version: 202509211504006) do
     t.boolean "is_primary", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "url"
     t.index ["user_id"], name: "index_photos_on_user_id"
   end
 
@@ -108,6 +109,7 @@ ActiveRecord::Schema[7.1].define(version: 202509211504006) do
     t.string "role", default: "user", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "location"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

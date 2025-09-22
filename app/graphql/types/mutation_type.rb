@@ -9,6 +9,7 @@ module Types
     field :update_profile, mutation: Mutations::Profile::UpdateProfile
     field :upload_photo, mutation: Mutations::Profile::UploadPhoto
     field :delete_photo, mutation: Mutations::Profile::DeletePhoto
+    field :set_primary_photo, mutation: Mutations::Profile::SetPrimaryPhoto
 
     # swipe / like
     field :like_user, mutation: Mutations::Swipe::LikeUser
