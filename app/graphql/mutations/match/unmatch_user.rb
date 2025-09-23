@@ -2,16 +2,21 @@
 module Mutations
   module Match
     class UnmatchUser < Mutations::BaseMutation
-      argument :match_id, ID, required: true
+      argument :targetUserId, ID, required: true
       field :success, Boolean, null: false
 
-      def resolve(match_id:)
+      def resolve(targetUserId:)
         user = require_current_user!
-        match = ::Match.find(match_id)
-        # ensure user is part of match
-        unless [match.user_one_id, match.user_two_id].include?(user.id)
-          raise GraphQL::ExecutionError, "Not authorized to unmatch"
+        target_user = User.find(targetUserId)
+        
+        # Find the match between the two users
+        u1, u2 = [user.id, target_user.id].sort
+        match = ::Match.find_by(user_one_id: u1, user_two_id: u2)
+        
+        unless match
+          raise GraphQL::ExecutionError, "No match found between users"
         end
+        
         match.destroy!
         { success: true }
       end

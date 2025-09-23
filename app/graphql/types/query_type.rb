@@ -21,18 +21,24 @@ module Types
     field :potentialUsers, [Types::UserType], null: true do
       argument :limit, Integer, required: false, default_value: 25
     end
-    def potential_users(limit:)
+    def potentialUsers(limit:)
       u = context[:current_user] or return []
 
       # Start with everyone except yourself
       scope = User.where.not(id: u.id)
 
       # Apply gender interest filter (skip if interest = "both")
+      # NOTE: Matching is based on gender_interest only, NOT sexual_orientation
+      # sexual_orientation is for profile display purposes only
       interest = u.gender_interest
-      scope = scope.where(gender: interest) unless interest.blank? || interest.downcase == "both"
+      unless interest.blank? || interest.downcase == "both"
+        # Handle case-insensitive gender matching
+        scope = scope.where("LOWER(gender) = LOWER(?)", interest)
+      end
 
-      # Exclude users the current user already liked/disliked
-      swiped_user_ids = Like.where(liker_id: u.id).pluck(:liked_id)
+      # Only exclude users the current user already LIKED (not disliked)
+      # This allows users to see disliked users again in future sessions
+      liked_user_ids = Like.where(liker_id: u.id, is_like: true).pluck(:liked_id)
 
       # Exclude users the current user is already matched with
       matched_user_ids = Match.where("user_one_id = :id OR user_two_id = :id", id: u.id)
@@ -40,8 +46,8 @@ module Types
                               .flatten
                               .uniq
 
-      # Combine exclusions
-      exclude_ids = swiped_user_ids + matched_user_ids
+      # Combine exclusions (only liked users and matched users)
+      exclude_ids = liked_user_ids + matched_user_ids
       scope = scope.where.not(id: exclude_ids)
 
       # Limit results

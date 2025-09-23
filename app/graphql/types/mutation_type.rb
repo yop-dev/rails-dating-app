@@ -2,29 +2,29 @@
 module Types
   class MutationType < Types::BaseObject
     # auth
-    field :register_user, mutation: Mutations::Auth::RegisterUser
-    field :login_user, mutation: Mutations::Auth::LoginUser
+    field :registerUser, mutation: Mutations::Auth::RegisterUser
+    field :loginUser, mutation: Mutations::Auth::LoginUser
 
     # profile
-    field :update_profile, mutation: Mutations::Profile::UpdateProfile
-    field :upload_photo, mutation: Mutations::Profile::UploadPhoto
-    field :delete_photo, mutation: Mutations::Profile::DeletePhoto
-    field :set_primary_photo, mutation: Mutations::Profile::SetPrimaryPhoto
+    field :updateProfile, mutation: Mutations::Profile::UpdateProfile
+    field :uploadPhoto, mutation: Mutations::Profile::UploadPhoto
+    field :deletePhoto, mutation: Mutations::Profile::DeletePhoto
+    field :setPrimaryPhoto, mutation: Mutations::Profile::SetPrimaryPhoto
 
     # swipe / like
-    field :like_user, mutation: Mutations::Swipe::LikeUser
-    field :dislike_user, mutation: Mutations::Swipe::DislikeUser
+    field :likeUser, mutation: Mutations::Swipe::LikeUser
+    field :dislikeUser, mutation: Mutations::Swipe::DislikeUser
 
     # matches
-    field :unmatch_user, mutation: Mutations::Match::UnmatchUser
+    field :unmatchUser, mutation: Mutations::Match::UnmatchUser
 
     # messages
-    field :send_message, mutation: Mutations::Message::SendMessage
+    field :sendMessage, mutation: Mutations::Message::SendMessage
 
     # admin (guarded inside mutations)
-    field :admin_create_user, mutation: Mutations::Admin::AdminCreateUser
-    field :admin_update_user, mutation: Mutations::Admin::AdminUpdateUser
-    field :admin_delete_user, mutation: Mutations::Admin::AdminDeleteUser
-    field :admin_delete_match, mutation: Mutations::Admin::AdminDeleteMatch
+    field :adminCreateUser, mutation: Mutations::Admin::AdminCreateUser
+    field :adminUpdateUser, mutation: Mutations::Admin::AdminUpdateUser
+    field :adminDeleteUser, mutation: Mutations::Admin::AdminDeleteUser
+    field :adminDeleteMatch, mutation: Mutations::Admin::AdminDeleteMatch
   end
 end

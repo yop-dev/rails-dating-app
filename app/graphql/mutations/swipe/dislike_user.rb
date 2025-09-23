@@ -1,13 +1,13 @@
 module Mutations
   module Swipe
     class DislikeUser < BaseMutation
-      argument :target_user_id, ID, required: true
+      argument :targetUserId, ID, required: true
 
       field :success, Boolean, null: false
 
-      def resolve(target_user_id:)
+      def resolve(targetUserId:)
         user = require_current_user!
-        target_user = User.find(target_user_id)
+        target_user = User.find(targetUserId)
 
         # Find or build a Like record
         like = Like.find_or_initialize_by(liker: user, liked_id: target_user.id)
