@@ -12,7 +12,9 @@ module Mutations
       argument :sexual_orientation, String, required: true
       argument :gender_interest, String, required: true
       argument :bio, String, required: true
-      argument :location, String, required: true
+      argument :country, String, required: false
+      argument :state, String, required: false
+      argument :city, String, required: false
       argument :school, String, required: false   # optional
 
       field :user, Types::UserType, null: true

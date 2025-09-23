@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :conversations_as_a, class_name: 'Conversation', foreign_key: :user_a_id
   has_many :conversations_as_b, class_name: 'Conversation', foreign_key: :user_b_id
 
-  validates :first_name, :last_name, :email, :mobile_number, :birthdate, :gender, :gender_interest, presence: true
+  validates :first_name, :last_name, :email, :mobile_number, :birthdate, :gender, :sexual_orientation, :gender_interest, :bio, presence: true
   validates :email, uniqueness: true
 
   # convenience methods
