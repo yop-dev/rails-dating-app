@@ -1,14 +1,10 @@
 # app/controllers/graphql_controller.rb
 class GraphqlController < ApplicationController
-  # remove protect_from_forgery
-  # protect_from_forgery with: :null_session  # ❌ remove
-
   def execute
-    variables = ensure_hash(params[:variables])
+    variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
 
-    # ✅ Set context with current_user
     context = {
       current_user: current_user_from_token
     }
@@ -41,14 +37,14 @@ class GraphqlController < ApplicationController
     nil
   end
 
-  def ensure_hash(ambiguous_param)
-    case ambiguous_param
+  def prepare_variables(variables_param)
+    case variables_param
     when String
-      ambiguous_param.present? ? JSON.parse(ambiguous_param) : {}
+      variables_param.present? ? JSON.parse(variables_param) : {}
     when Hash
-      ambiguous_param
+      variables_param
     when ActionController::Parameters
-      ambiguous_param.to_unsafe_hash
+      variables_param.to_unsafe_h
     else
       {}
     end

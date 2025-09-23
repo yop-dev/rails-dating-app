@@ -8,6 +8,10 @@ group :development do
   gem "graphiql-rails", "~> 1.7"
 end
 
+gem "cloudinary"
+gem "dotenv-rails", groups: [:development, :test]
+gem 'apollo_upload_server'
+
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
